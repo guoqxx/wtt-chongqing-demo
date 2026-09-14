@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WTT重庆赛活动落地页 Demo</title>
+<style>
+:root{
+  --bg:#0d0c12;--panel:#17151d;--card:#201c27;--text:#f7f7f8;--muted:#aaa5b2;
+  --accent:#e23a52;--accent2:#ff6b3d;--border:#3b3444;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,"PingFang SC","Microsoft YaHei",Arial,sans-serif;background:#0a0910;color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.wrap{width:min(1120px,calc(100% - 24px));margin:auto}
+.hero{min-height:560px;margin-top:12px;border-radius:28px;overflow:hidden;position:relative;
+background:
+radial-gradient(circle at 75% 20%,rgba(255,80,80,.25),transparent 30%),
+linear-gradient(135deg,#160b11 0%,#311019 45%,#0d0c12 100%);
+}
+.hero:before{content:"";position:absolute;inset:0;background-image:
+linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:28px 28px}
+.hero-inner{position:relative;z-index:1;padding:72px 36px 48px;max-width:760px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:12px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12)}
+h1{font-size:clamp(42px,7vw,76px);line-height:1.02;margin:18px 0 16px}
+.sub{color:#d3ced6;line-height:1.8;max-width:620px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{border:0;border-radius:999px;padding:14px 22px;font-weight:700}
+.btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:white}
+.btn-ghost{background:rgba(255,255,255,.09);color:white;border:1px solid rgba(255,255,255,.18)}
+.nav{position:sticky;top:8px;z-index:10;margin:14px 0;background:rgba(18,16,24,.92);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:18px;padding:8px;display:flex;gap:6px;overflow:auto}
+.nav button{background:transparent;color:#e9e6ec;border:0;border-radius:12px;padding:12px 15px;white-space:nowrap}
+.nav button:hover{background:#29242f}
+.section{padding:58px 0}
+.section-head{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:24px}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.16em;color:#ff687f}
+h2{font-size:32px;margin:8px 0 6px}
+.muted{color:var(--muted)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:24px}
+.filters{display:grid;grid-template-columns:1fr 180px;gap:10px;margin-bottom:16px}
+input,select{width:100%;background:#17151d;color:white;border:1px solid var(--border);border-radius:14px;padding:14px 15px;outline:none}
+input:focus,select:focus{border-color:#ff6079}
+.schedule-list{display:grid;gap:10px}
+.match{width:100%;background:#17151d;color:white;border:1px solid var(--border);border-radius:18px;padding:16px;text-align:left}
+.match:hover{border-color:#e65167}
+.match-top{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.time{font-size:24px;font-weight:900}
+.tag{font-size:12px;padding:7px 10px;background:#27222d;border-radius:999px}
+.social-card .cta{width:100%;margin-top:16px;border:0;border-radius:14px;padding:14px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;font-weight:800}
+.box{background:#17151d;border-radius:16px;padding:14px;margin-top:16px}
+.wall{background:#15131a;border:1px solid var(--border);border-radius:24px;padding:22px 0;overflow:hidden}
+.track{overflow:hidden;margin:10px 0;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.row{display:flex;gap:10px;width:max-content;animation:marquee 26s linear infinite}
+.track:nth-child(2) .row{animation-direction:reverse;animation-duration:32s}
+.wall.paused .row{animation-play-state:paused}
+.comment{background:#23202a;border:1px solid #39323f;border-radius:999px;padding:10px 14px;white-space:nowrap;color:#eee}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.form-grid{display:grid;grid-template-columns:.9fr 1.1fr;border:1px solid var(--border);border-radius:24px;overflow:hidden}
+.form-info{background:#17151d;padding:28px}
+.form-area{background:#201c27;padding:28px}
+.field{margin-bottom:16px}
+label{display:block;font-weight:700;margin-bottom:8px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#d5d1d8}
+.check input{width:18px;height:18px;margin-top:2px}
+.err{color:#ff7e8e;font-size:12px;margin-top:6px;display:none}
+.submit{width:100%;border:0;border-radius:14px;padding:15px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:white;font-weight:800;margin-top:16px}
+.follow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.follow{background:#201c27;border:1px solid var(--border);border-radius:20px;padding:20px;color:white;text-align:left;min-height:120px}
+.follow:hover{border-color:#e65167}
+.back{display:block;margin:28px auto 0;border:1px solid var(--border);background:#201c27;color:#fff;border-radius:999px;padding:12px 18px}
+.toast{position:fixed;right:18px;bottom:18px;background:#201c27;border:1px solid var(--border);padding:14px 16px;border-radius:14px;display:none;max-width:320px;box-shadow:0 18px 60px rgba(0,0,0,.35)}
+.note{font-size:12px;color:#9893a0;background:#15131a;border:1px solid var(--border);border-radius:14px;padding:12px 14px}
+@media(max-width:760px){
+  .wrap{width:min(100% - 16px,1120px)}
+  .hero{min-height:520px}
+  .hero-inner{padding:56px 22px 34px}
+  .grid-2,.form-grid{grid-template-columns:1fr}
+  .filters{grid-template-columns:1fr}
+  .follow-grid{grid-template-columns:1fr 1fr}
+  .section{padding:42px 0}
+  h2{font-size:27px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="pills">
+      <span class="pill">WTT CHONGQING</span>
+      <span class="pill">互动专题页 Demo</span>
+    </div>
+    <p style="margin-top:28px;color:#d5cfd8;font-weight:700">热爱不止观赛 · 一起为精彩喝彩</p>
+    <h1>重庆开球<br><span style="color:#c9c2cc">热爱正当时</span></h1>
+    <p class="sub">查看赛程、参与微博与抖音赛事互动、加入打气墙，并留下联系方式获取后续赛事及品牌活动资讯。</p>
+    <div class="actions">
+      <button class="btn btn-primary" data-jump="schedule">查看赛程</button>
+      <button class="btn btn-ghost" data-jump="lead">获取活动资讯</button>
+    </div>
+  </div>
+</section>
+
+<nav class="nav">
+  <button data-jump="home">首页</button>
+  <button data-jump="schedule">赛程</button>
+  <button data-jump="social">赛事活动</button>
+  <button data-jump="cheer">打气墙</button>
+  <button data-jump="lead">提交信息</button>
+  <button data-jump="follow">关注我们</button>
+</nav>
+
+<div class="note">当前为演示版本：赛程、评论、观看渠道与社媒链接均为模拟内容，正式版本可替换真实数据。</div>
+
+<section class="section" id="schedule">
+  <div class="section-head">
+    <div>
+      <div class="kicker">MATCH SCHEDULE</div>
+      <h2>赛程安排</h2>
+      <div class="muted">支持搜索和日期筛选。</div>
+    </div>
+  </div>
+  <div class="filters">
+    <input id="search" placeholder="搜索：单打 / 16强 / 微博...">
+    <select id="date">
+      <option value="all">全部日期</option>
+      <option>3月10日</option>
+      <option>3月11日</option>
+      <option>3月12日</option>
+      <option>3月13日</option>
+    </select>
+  </div>
+  <div class="schedule-list" id="scheduleList"></div>
+</section>
+
+<section class="section" id="social">
+  <div class="section-head">
+    <div>
+      <div class="kicker">SOCIAL ACTIVITIES</div>
+      <h2>赛事互动</h2>
+      <div class="muted">引导用户参与微博与抖音内容互动。</div>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card social-card">
+      <div class="kicker">微博赛事活动</div>
+      <h3>晒出你的冠军时刻</h3>
+      <p class="muted">参与赛事话题，分享观赛瞬间、预测结果和助威内容。</p>
+      <div class="box"><strong>#重庆一起乒#</strong><div class="muted" style="margin-top:6px">转发 / 评论 / 分享</div></div>
+      <button class="cta" data-social="微博">一键参与</button>
+    </div>
+    <div class="card social-card">
+      <div class="kicker">抖音赛事活动</div>
+      <h3>拍下你的热爱瞬间</h3>
+      <p class="muted">发布你的乒乓动作、观赛反应或助威视频。</p>
+      <div class="box"><strong>挑战：10秒乒乓热爱</strong><div class="muted" style="margin-top:6px">拍摄 / 发布 / 参与话题</div></div>
+      <button class="cta" data-social="抖音">一键参与</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="cheer">
+  <div class="section-head">
+    <div>
+      <div class="kicker">CHEER WALL</div>
+      <h2>全城打气墙</h2>
+      <div class="muted">模拟微博 / 抖音评论弹幕。</div>
+    </div>
+    <button id="toggleWall" class="btn btn-ghost">暂停弹幕</button>
+  </div>
+  <div class="wall" id="wall">
+    <div class="track"><div class="row">
+      <span class="comment">微博 · 重庆主场氛围拉满！🔥</span><span class="comment">抖音 · 今天一定守着看比赛！</span><span class="comment">微博 · 国乒加油！</span><span class="comment">抖音 · 这个回合太燃了！</span>
+      <span class="comment">微博 · 重庆主场氛围拉满！🔥</span><span class="comment">抖音 · 今天一定守着看比赛！</span><span class="comment">微博 · 国乒加油！</span><span class="comment">抖音 · 这个回合太燃了！</span>
+    </div></div>
+    <div class="track"><div class="row">
+      <span class="comment">抖音 · 重庆，我们来了！🏓</span><span class="comment">微博 · 每一板都值得尖叫</span><span class="comment">抖音 · 期待今天的神仙球</span><span class="comment">微博 · 决胜局见真章！</span>
+      <span class="comment">抖音 · 重庆，我们来了！🏓</span><span class="comment">微博 · 每一板都值得尖叫</span><span class="comment">抖音 · 期待今天的神仙球</span><span class="comment">微博 · 决胜局见真章！</span>
+    </div></div>
+  </div>
+</section>
+
+<section class="section" id="lead">
+  <div class="form-grid">
+    <div class="form-info">
+      <div class="kicker">STAY IN THE GAME</div>
+      <h2>不错过下一场精彩</h2>
+      <p class="muted">留下联系方式，获取赛事互动及品牌活动资讯。此 Demo 不会真实上传信息。</p>
+    </div>
+    <form class="form-area" id="leadForm">
+      <div class="field">
+        <label>姓名 *</label>
+        <input id="name" maxlength="20" placeholder="请输入姓名">
+        <div class="err" id="nameErr"></div>
+      </div>
+      <div class="field">
+        <label>手机号 *</label>
+        <input id="phone" maxlength="11" inputmode="numeric" placeholder="请输入11位手机号">
+        <div class="err" id="phoneErr"></div>
+      </div>
+      <label class="check"><input type="checkbox" id="privacy"><span>我已阅读并同意隐私政策，同意将信息用于活动联络。</span></label>
+      <div class="err" id="privacyErr"></div>
+      <button class="submit" type="submit">提交信息</button>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="follow">
+  <div class="section-head">
+    <div>
+      <div class="kicker">FOLLOW US</div>
+      <h2>关注我们</h2>
+    </div>
+  </div>
+  <div class="follow-grid">
+    <button class="follow" data-follow="微博"><small class="muted">01</small><h3>官方微博</h3></button>
+    <button class="follow" data-follow="抖音"><small class="muted">02</small><h3>官方抖音</h3></button>
+    <button class="follow" data-follow="小红书"><small class="muted">03</small><h3>官方小红书</h3></button>
+    <button class="follow" data-follow="第四平台"><small class="muted">04</small><h3>第四个平台</h3></button>
+  </div>
+  <button class="back" id="backTop">↑ 返回顶部</button>
+</section>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const games=[
+{date:'3月10日',time:'11:00',title:'男女单打 · 32强',channel:'官方直播 / 视频平台'},
+{date:'3月10日',time:'18:30',title:'男女单打 · 晚间场',channel:'官方直播 / 微博'},
+{date:'3月11日',time:'14:00',title:'男女单打 · 32强',channel:'官方直播 / 抖音'},
+{date:'3月12日',time:'18:30',title:'男女单打 · 16强',channel:'官方直播 / 视频平台'},
+{date:'3月13日',time:'19:00',title:'男女单打 · 8强焦点战',channel:'官方直播 / 微博'}
+];
+const list=document.getElementById('scheduleList');
+const search=document.getElementById('search');
+const date=document.getElementById('date');
+const toast=document.getElementById('toast');
+let toastTimer;
+function showToast(text){
+ clearTimeout(toastTimer);toast.textContent=text;toast.style.display='block';
+ toastTimer=setTimeout(()=>toast.style.display='none',2600)
+}
+function render(){
+ const q=search.value.trim().toLowerCase(),d=date.value;
+ const f=games.filter(x=>(d==='all'||x.date===d)&&(!q||[x.date,x.time,x.title,x.channel].join(' ').toLowerCase().includes(q)));
+ list.innerHTML='';
+ if(!f.length){list.innerHTML='<div class="card muted" style="text-align:center">没有找到匹配赛程。</div>';return}
+ f.forEach(x=>{
+  const b=document.createElement('button');b.className='match';b.type='button';
+  b.innerHTML=`<div class="match-top"><div><div class="muted" style="font-size:12px">${x.date}</div><div class="time">${x.time}</div></div><span class="tag">${x.title}</span></div><div class="muted" style="margin-top:10px">观看渠道：${x.channel}</div>`;
+  b.onclick=()=>showToast(`Demo演示：正式版将打开「${x.channel}」对应观看入口。`);
+  list.appendChild(b);
+ })
+}
+search.addEventListener('input',render);date.addEventListener('change',render);render();
+document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>document.getElementById(b.dataset.jump).scrollIntoView({behavior:'smooth'}));
+document.querySelectorAll('[data-social]').forEach(b=>b.onclick=()=>showToast(`Demo演示：正式版将跳转至指定${b.dataset.social}活动正文。`));
+document.querySelectorAll('[data-follow]').forEach(b=>b.onclick=()=>showToast(`Demo演示：正式版将打开「${b.dataset.follow}」主页或二维码。`));
+document.getElementById('backTop').onclick=()=>document.getElementById('home').scrollIntoView({behavior:'smooth'});
+document.getElementById('toggleWall').onclick=function(){
+ const w=document.getElementById('wall');w.classList.toggle('paused');
+ this.textContent=w.classList.contains('paused')?'继续弹幕':'暂停弹幕';
+};
+document.getElementById('leadForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const name=document.getElementById('name').value.trim();
+ const phone=document.getElementById('phone').value.trim();
+ const privacy=document.getElementById('privacy').checked;
+ const ne=document.getElementById('nameErr'),pe=document.getElementById('phoneErr'),pre=document.getElementById('privacyErr');
+ [ne,pe,pre].forEach(x=>{x.style.display='none';x.textContent=''});
+ let ok=true;
+ if(name.length<2){ne.textContent='请输入至少2个字符的姓名。';ne.style.display='block';ok=false}
+ if(!/^1[3-9]\d{9}$/.test(phone)){pe.textContent='请输入有效的11位中国大陆手机号码。';pe.style.display='block';ok=false}
+ if(!privacy){pre.textContent='请先同意隐私政策。';pre.style.display='block';ok=false}
+ if(!ok)return;
+ showToast('提交成功，我们会尽快联系您');
+ e.target.reset();
+});
+</script>
+</body>
+</html>
